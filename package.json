@@ -1,0 +1,19 @@
+{
+  "name": "enoki",
+  "version": "1.0.0",
+  "description": "More soon…",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jondashkyle/enoki.git"
+  },
+  "author": "Jon-Kyle <contact@jon-kyle.com> (http://jon-kyle.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jondashkyle/enoki/issues"
+  },
+  "homepage": "https://github.com/jondashkyle/enoki#readme"
+}
