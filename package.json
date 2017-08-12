@@ -1,19 +1,34 @@
 {
   "name": "enoki",
   "version": "1.0.0",
-  "description": "More soon…",
+  "description": "",
   "main": "index.js",
+  "bin": {
+    "enoki": "./bin/index.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jondashkyle/enoki.git"
-  },
+  "keywords": [],
   "author": "Jon-Kyle <contact@jon-kyle.com> (http://jon-kyle.com)",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jondashkyle/enoki/issues"
-  },
-  "homepage": "https://github.com/jondashkyle/enoki#readme"
+  "dependencies": {
+    "budo": "^10.0.4",
+    "fs-compare": "0.0.4",
+    "fs-extra": "^4.0.1",
+    "js-yaml": "^3.9.0",
+    "jsonwebtoken": "^7.4.2",
+    "merry": "^5.3.3",
+    "neat-log": "^1.1.0",
+    "node-dir": "^0.1.17",
+    "node-fs-extra": "^0.8.2",
+    "parse-body": "^1.0.3",
+    "require-globify": "^1.4.1",
+    "static-module": "^1.5.0",
+    "tape": "^4.8.0",
+    "through2": "^2.0.3",
+    "xhr": "^2.4.0",
+    "xtend": "^4.0.1",
+    "yargs": "^8.0.2"
+  }
 }
