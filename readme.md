@@ -23,7 +23,6 @@ Enoki transforms your content into a static site. It’s suggested you use the [
 
 <details id="column">
 <summary>View the cli --help</summary>
-There are a few options which will be available in future versions of the CLI.
 
 ```
 --verbose, -v  Show version number                  [boolean] [default: false]
@@ -39,6 +38,7 @@ There are a few options which will be available in future versions of the CLI.
 --config, -C   Config file                             [default: "config.yml"]
 -h, --help     Show help                                             [boolean]
 ```
+
 </details>
 
 ### Build
@@ -72,4 +72,4 @@ The intent is to make a modular set of tools, but during pre-alpha some of these
 
 Instead, it’s suggested you download the [Starter Kit](http://starter-kit.com) to get an example structure of a fully working site. Future documentation will cover each individual module in detail, but for now what follows is a walk-through of the Starter Kit.
 
-**Download the Starter Kit**
+[**Download the Starter Kit**](https://github.com/jondashkyle/enoki-starterkit)
