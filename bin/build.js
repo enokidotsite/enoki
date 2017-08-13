@@ -11,7 +11,7 @@ function build (opts) {
   var options = getOptions.defaults(opts)
   var paths = getOptions.paths(options)
   var site = readSiteSync()
-  var template = readTemplateSync()
+  var view = readViewSync()
 
   assert.equal(typeof site, 'object', 'site must be type object')
   assert.equal(typeof site.state, 'object', 'site.state must be type object')
@@ -34,7 +34,7 @@ function build (opts) {
       assert.equal(typeof page.path, 'string', 'page path must be type string')
       fs.outputFile(
         path.join(paths.output, page.path, 'index.html'),
-        formatTemplate(site.toString(page.path, site.state)),
+        formatView(site.toString(page.path, site.state)),
         { encoding: 'utf-8' },
         function (err, data) {
           if (err) return console.error(err.message)
@@ -107,9 +107,9 @@ function build (opts) {
     }
   }
 
-  // throw the content in the template
-  function formatTemplate (input) {
-    return template.replace('<main></main>', input)
+  // throw the content in the view
+  function formatView (input) {
+    return view.replace('<main></main>', input)
   }
 
   // try reading the site’s exports
@@ -122,8 +122,8 @@ function build (opts) {
     }
   }
 
-  // load the template if it’s there, default if not
-  function readTemplateSync () {
+  // load the view if it’s there, default if not
+  function readViewSync () {
     try {
       return fs.readFileSync(path.join(paths.assets, 'index.html'), 'utf8')
     } catch (err) {

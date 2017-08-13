@@ -2,7 +2,7 @@ module.exports = {
   port: 8080,
   portpanel: 8081,
   portapi: 8082,
-  output: 'build/',
+  output: 'public/',
   site: 'site/',
   content: 'content/',
   panel: 'panel/',
