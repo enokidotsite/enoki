@@ -20,6 +20,7 @@ require('yargs')
     },
     dev
   )
+  .usage('$0 <cmd> [args]')
   .alias('v', 'version')
   .version(function() { return require('../package').version })
   .describe('v', 'show version information')
