@@ -14,7 +14,7 @@ require('yargs')
   )
   .command(
     'dev',
-    'dev the site',
+    'spin up a local server and develop',
     function (yargs) {
       setOptions(yargs)
     },
@@ -25,8 +25,7 @@ require('yargs')
   .describe('v', 'show version information')
   .alias('h', 'help')
   .help('help')
-  .usage('Usage: $0 -x [num]')
-  .showHelpOnFail(false, "Specify --help for available options")
+  .showHelpOnFail(true, "Specify --help for available options")
   .argv
 
 function setOptions (yargs) {
