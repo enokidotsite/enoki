@@ -1,10 +1,8 @@
 # Enoki
 
-Enoki is a set of tools for self-publishing.
+Enoki is a set of tools for self-publishing websites.
 
-## Pre-Alpha
-
-Not ready for production! Bugs everywhere! No testing! Limited documentation! Boo!!
+- If you’re looking for a place to start, take a look at the [Starter Kit](https://github.com/jondashkyle/enoki-starterkit).
 
 ## Features
 
@@ -15,11 +13,14 @@ Not ready for production! Bugs everywhere! No testing! Limited documentation! Bo
 - **archivable**: totally portable and future-proof
 - **managable**: [appropriate](https://en.wikipedia.org/wiki/Appropriate_technology) for small to mid-sized projects
 
-## Philosophy
+**Pre-alpha**! Not ready for production! Bugs everywhere! No testing! Limited documentation! Boo!!
 
 ## Usage
 
 Enoki transforms your content into a static site. It’s suggested you use the [Starter Kit](#starter-kit) during pre-alpha. You can use Enoki either as a [command line interface]() or a [javascript module]().
+
+If you’re looking for a place to start, take a look at the [Starter Kit](https://github.com/jondashkyle/enoki-starterkit).
+
 
 <details id="column">
 <summary>View the cli --help</summary>
