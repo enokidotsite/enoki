@@ -1,3 +1,4 @@
+var fs = require('fs')
 var path = require('path')
 var xtend = require('xtend')
 var through = require('through2')
@@ -30,6 +31,13 @@ function enokiDirectoryTransform (filename) {
         sm.emit('file', path)
       }
     }, opts))
+
+    // panel log
+    try {
+      var pathLog = path.join(opts.directory, '.log')
+      var isFile = fs.lstatSync(pathLog).isFile()
+      sm.emit('file', pathLog)
+    } catch (err) { } // fail silently
 
     var stream = through()
     stream.push(JSON.stringify(site, { }, 2))
