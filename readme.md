@@ -2,7 +2,7 @@
 
 Enoki is a set of tools for self-publishing websites.
 
-- If you’re looking for a place to start, take a look at the [Starter Kit](https://github.com/jondashkyle/enoki-starterkit).
+If you’re looking for a place to start, take a look at the [Starter Kit](https://github.com/jondashkyle/enoki-starterkit).
 
 ## Features
 
