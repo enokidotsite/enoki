@@ -19,9 +19,6 @@ If you’re looking for a place to start, take a look at the [Starter Kit](https
 
 Enoki transforms your content into a static site. It’s suggested you use the [Starter Kit](#starter-kit) during pre-alpha. You can use Enoki either as a [command line interface]() or a [javascript module]().
 
-If you’re looking for a place to start, take a look at the [Starter Kit](https://github.com/jondashkyle/enoki-starterkit).
-
-
 <details id="column">
 <summary>View the cli --help</summary>
 
