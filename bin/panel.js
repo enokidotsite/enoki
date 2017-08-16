@@ -107,6 +107,41 @@ function serve (opts) {
     })
   })
 
+  app.route('PUT', '/add-file', function (req, res, ctx) {
+    cors(req, res, function () {
+      parseBody(req, 1e6, function (err, body) {
+        if (err) return ctx.send(400, { message: err.message })
+        if (body.path && body.filename && body.result) {
+          // WOW SUPER HACKY
+          var image = new Buffer(body.result.split(",")[1], 'base64')
+          try {
+            fs.outputFile(
+              path.join(paths.content, body.path, body.filename),
+              image,
+              'binary',
+              function (err) {
+                if (err) return console.error(err.message)
+                if (options.verbose) console.log('created ' + page.path)
+                ctx.log.info('write')
+                ctx.send(201, { message: 'success' })
+                // major hack to force refresh
+                fs.appendFileSync(
+                  path.join(paths.root, '.log'),
+                  path.join(body.path, body.view + '.txt\n')
+                )
+              }
+            )
+          } catch (err) {
+            ctx.send(400, { message: 'can not update' })
+          }
+        } else {
+          ctx.send(400, { message: 'missing data' })
+        }
+      }) 
+    })
+  })
+
+
   app.route('PUT', '/remove', function (req, res, ctx) {
     cors(req, res, function () {
       parseBody(req, 1e6, function (err, body) {
