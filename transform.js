@@ -16,32 +16,30 @@ function enokiDirectoryTransform (filename) {
   }
 
   var sm = staticModule({
-    enoki: readDir
+    enoki:  function readDir (opts) {
+      var site = enoki(xtend({
+        directory: vars.__dirname,
+        onFile: function (path) {
+          sm.emit('file', path)
+        }
+      }, opts))
+
+      // panel log
+      try {
+        var pathLog = path.join(opts.directory, '.log')
+        var isFile = fs.lstatSync(pathLog).isFile()
+        sm.emit('file', pathLog)
+      } catch (err) { } // fail silently
+
+      var stream = through()
+      stream.push(JSON.stringify(site, { }, 2))
+      stream.push(null)
+      return stream
+    }
   }, {
     vars: vars,
     varModules: { path: path }
   })
 
   return sm
-
-  function readDir (opts) {
-    var site = enoki(xtend({
-      directory: vars.__dirname,
-      onFile: function (path) {
-        sm.emit('file', path)
-      }
-    }, opts))
-
-    // panel log
-    try {
-      var pathLog = path.join(opts.directory, '.log')
-      var isFile = fs.lstatSync(pathLog).isFile()
-      sm.emit('file', pathLog)
-    } catch (err) { } // fail silently
-
-    var stream = through()
-    stream.push(JSON.stringify(site, { }, 2))
-    stream.push(null)
-    return stream
-  }
 }
