@@ -118,7 +118,6 @@ function build (opts) {
       return require(paths.site)
     } catch (err) {
       console.error('directory structure is not a site:')
-      console.error(err)
     }
   }
 

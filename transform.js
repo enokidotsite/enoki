@@ -3,11 +3,12 @@ var path = require('path')
 var xtend = require('xtend')
 var through = require('through2')
 var staticModule = require('static-module')
+
 var enoki = require('.')
 
-module.exports = enokiDirectoryTransform
+module.exports = enokiTransform
 
-function enokiDirectoryTransform (filename) {
+function enokiTransform (filename) {
   if (/\.json$/.test(filename)) return through()
 
   var vars = {
