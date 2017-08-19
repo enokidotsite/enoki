@@ -10,7 +10,7 @@ var getOptions = require('./options')
 var enokiModule = require('../')
 var enokiTransform = require('../transform')
 
-var cm = require('../lib/content')
+var utilsContent = require('../lib/utils/content')
 
 module.exports = serve
 
@@ -60,7 +60,7 @@ function serve (opts) {
           try {
             fs.outputFile(
               path.join(paths.content, body.path, body.file),
-              cm.encode(body.page),
+              utilsContent.encode(body.page),
               function (err) {
                 if (err) return console.error(err.message)
                 if (options.verbose) console.log('created ' + page.path)
@@ -86,7 +86,7 @@ function serve (opts) {
           try {
             fs.outputFile(
               path.join(paths.content, body.path, body.view + '.txt'),
-              cm.encode({ title: body.title }),
+              utilsContent.encode({ title: body.title }),
               function (err) {
                 if (err) return console.error(err.message)
                 if (options.verbose) console.log('created ' + page.path)
@@ -114,7 +114,7 @@ function serve (opts) {
       parseBody(req, 1e6, function (err, body) {
         if (err) return ctx.send(400, { message: err.message })
         if (body.path && body.filename && body.result) {
-          // WOW SUPER HACKY
+          // SUPER HACKY
           var image = new Buffer(body.result.split(",")[1], 'base64')
           try {
             fs.outputFile(
@@ -177,7 +177,7 @@ function serve (opts) {
   app.route('default', function (req, res, ctx) {
     cors(req, res, function () {
       ctx.log.info('Route doesnt exist')
-      ctx.send(404, { message: 'nada butts here' })
+      ctx.send(404, { message: 'Route does not exist' })
     })
   })
 

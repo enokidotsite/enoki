@@ -40,9 +40,9 @@ function enoki (opts) {
   this.onFile = opts.onFile || function () { }
 
   // kit
-  this.getPage = require('./lib/page')
-  this.getFile = require('./lib/file')
-  this.getSite = require('./lib/site')
+  this.getPage = require('./lib/read/page')
+  this.getFile = require('./lib/read/file')
+  this.getSite = require('./lib/read/site')
 
   // public
   this.site = this.getSite()
