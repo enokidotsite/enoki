@@ -19,7 +19,7 @@ function getDefaults (opts) {
 
 function getOptions (filename) {
   filename = filename || 'config.yml'
-  var pathConfig = path.join(process.env.PWD, filename)
+  var pathConfig = path.join(process.cwd(), filename)
   
   try {
     var config = fs.readFileSync(pathConfig, 'utf8')
@@ -33,11 +33,11 @@ function getOptions (filename) {
 // some options for paths
 function paths (opts) {
   var self = { }
-  self.root = process.env.PWD
-  self.output = path.join(process.env.PWD, opts.output)
-  self.site = path.join(process.env.PWD, opts.site)
-  self.content = path.join(process.env.PWD, opts.content)
-  self.panel = path.join(process.env.PWD, opts.panel)
+  self.root = process.cwd()
+  self.output = path.join(process.cwd(), opts.output)
+  self.site = path.join(process.cwd(), opts.site)
+  self.content = path.join(process.cwd(), opts.content)
+  self.panel = path.join(process.cwd(), opts.panel)
   self.assets = path.join(self.site, opts.assets)
   return self
 }
