@@ -102,9 +102,8 @@ function build (opts) {
           }
         )
       })
-    } catch (err) {
-
-    }
+    // fail silently
+    } catch (err) { }
   }
 
   // throw the content in the view
@@ -114,7 +113,15 @@ function build (opts) {
 
   // try reading the site’s exports
   function readSiteSync () {
-    return require(paths.site)
+    try {
+      var exists = fs.lstatSync(path.join(paths.site, 'index.js')).isFile()
+      var site = require(paths.site)
+    } catch (err) {
+      throw new Error(`enoki: site does not exist in directory "${options.site}"`)
+    }
+
+    assert.equal(typeof site.toString, 'function', 'enoki: site must export `.toString()` to render routes')
+    return site
   }
 
   // load the view if it’s there, default if not
