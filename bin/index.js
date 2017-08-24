@@ -2,7 +2,7 @@
 var build = require('./build')
 var dev = require('./dev')
 var panel = require('./panel')
-var defaults = require('./defaults')
+var defaults = require('../lib/utils/defaults')
 
 require('yargs')
   .command(

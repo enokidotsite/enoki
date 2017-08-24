@@ -1,15 +1,15 @@
+var fsCompareSync = require('fs-compare').sync
 var assert = require('assert')
 var path = require('path')
 var fs = require('fs-extra')
-var fsCompareSync = require('fs-compare').sync
 
-var getOptions = require('./options')
+var utilsOptions = require('../lib/utils/options')
 
 module.exports = build
 
 function build (opts) {
-  var options = getOptions.defaults(opts)
-  var paths = getOptions.paths(options)
+  var options = utilsOptions.defaults(opts)
+  var paths = utilsOptions.paths(options)
   var site = readSiteSync()
   var view = readViewSync()
 
@@ -114,11 +114,7 @@ function build (opts) {
 
   // try reading the site’s exports
   function readSiteSync () {
-    try {
-      return require(paths.site)
-    } catch (err) {
-      console.error('directory structure is not a site:')
-    }
+    return require(paths.site)
   }
 
   // load the view if it’s there, default if not
