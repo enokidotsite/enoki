@@ -5,12 +5,14 @@ var globify = require('require-globify')
 var parseBody = require('parse-body')
 var serverRouter = require('server-router')
 
-var getOptions = require('./options')
-
 var enokiModule = require('../')
 var enokiTransform = require('../transform')
 
+var getOptions = require('./options')
 var utilsContent = require('../lib/utils/content')
+var writePage = require('../lib/write/file')
+var writePage = require('../lib/write/page')
+var writeSite = require('../lib/write/site')
 
 module.exports = serve
 
@@ -56,35 +58,28 @@ function serve (opts) {
 
   function handleUpdate (req, res) {
     parseBody(req, 1e6, function (err, body) {
-      if (err) {
-        res.writeHead(400, { 'Content-Type': 'application/json' })
-        return res.end(JSON.stringify({ message: 'Error '}))
-      }
-
+      if (err) return handleError(err)
       try {
-        fs.outputFile(
-          path.join(paths.content, body.path, body.file),
-          utilsContent.encode(body.page),
-          function (err) {
-            if (err) return console.error(err.message)
-            if (options.verbose) console.log('created ' + page.path)
-            res.writeHead(201, { 'Content-Type': 'application/json' })
-            return res.end(JSON.stringify({ message: 'Worked' }))
-          }
-        )
+        writePage.update({
+          pathContent: paths.content,
+          pathPage: body.pathPage,
+          file: body.file,
+          page: body.page
+        }, function callback (err) {
+          if (err) return console.error(err.message)
+          if (options.verbose) console.log('created ' + opts.pathPage)
+          res.writeHead(201, { 'Content-Type': 'application/json' })
+          return res.end(JSON.stringify({ message: 'Worked' }))
+        })
       } catch (err) {
-        res.writeHead(400, { 'Content-Type': 'application/json' })
-        return res.end(JSON.stringify({ message: 'Error '}))
+        return handleError(req, res, err)
       }
     }) 
   }
 
   function handleAdd (req, res) {
     parseBody(req, 1e6, function (err, body) {
-      if (err) {
-        res.writeHead(400, { 'Content-Type': 'application/json' })
-        return res.end(JSON.stringify({ message: 'Error '}))
-      }
+      if (err) return handleError(err)
 
       try {
         fs.outputFile(
@@ -113,10 +108,7 @@ function serve (opts) {
 
   function handleAddFile (req, res) {
     parseBody(req, 1e6, function (err, body) {
-      if (err) {
-        res.writeHead(400, { 'Content-Type': 'application/json' })
-        return res.end(JSON.stringify({ message: 'Error '}))
-      }
+      if (err) return handleError(err)
 
       try {
         var image = new Buffer(body.result.split(",")[1], 'base64')
@@ -147,10 +139,7 @@ function serve (opts) {
 
   function handleRemove (req, res) {
     parseBody(req, 1e6, function (err, body) {
-      if (err) {
-        res.writeHead(400, { 'Content-Type': 'application/json' })
-        return res.end(JSON.stringify({ message: 'Error '}))
-      }
+      if (err) return handleError(err)
 
       try {
         fs.remove(
@@ -175,6 +164,12 @@ function serve (opts) {
       }
     }) 
   }
+}
+
+function handleError (req, res, err) {
+  console.warn(err)
+  res.writeHead(400, { 'Content-Type': 'application/json' })
+  return res.end(JSON.stringify({ message: 'Error:' + err.message }))
 }
 
 function cors (req, res, next) {
