@@ -33,6 +33,9 @@ function serve (opts) {
 
   var router = serverRouter()
   router.route('PUT', '/api/v1/update', handleUpdate)
+  router.route('PUT', '/api/v1/add', handleAdd)
+  router.route('PUT', '/api/v1/add-file', handleAdd)
+  router.route('PUT', '/api/v1/remove', handleRemove)
 
   // interface
   var server = budo(paths.panel, {
@@ -76,139 +79,102 @@ function serve (opts) {
     }) 
   }
 
+  function handleAdd (req, res) {
+    parseBody(req, 1e6, function (err, body) {
+      if (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json' })
+        return res.end(JSON.stringify({ message: 'Error '}))
+      }
 
-  // app.route('PUT', '/update', function (req, res, ctx) {
-  //   cors(req, res, function () {
-  //     parseBody(req, 1e6, function (err, body) {
-  //       if (err) return ctx.send(400, { message: err.message })
-  //       if (body.path && body.file && body.page) {
-  //         try {
-  //           fs.outputFile(
-  //             path.join(paths.content, body.path, body.file),
-  //             utilsContent.encode(body.page),
-  //             function (err) {
-  //               if (err) return console.error(err.message)
-  //               if (options.verbose) console.log('created ' + page.path)
-  //               ctx.log.info('write')
-  //               ctx.send(201, { message: 'success' })
-  //             }
-  //           )
-  //         } catch (err) {
-  //           ctx.send(400, { message: 'can not update' })
-  //         }
-  //       } else {
-  //         ctx.send(400, { message: 'missing data' })
-  //       }
-  //     }) 
-  //   })
-  // })
+      try {
+        fs.outputFile(
+          path.join(paths.content, body.path, body.view + '.txt'),
+          utilsContent.encode({ title: body.title }),
+          function (err) {
+            if (err) return console.error(err.message)
+            if (options.verbose) console.log('created ' + page.path)
 
-  // app.route('PUT', '/add', function (req, res, ctx) {
-  //   cors(req, res, function () {
-  //     parseBody(req, 1e6, function (err, body) {
-  //       if (err) return ctx.send(400, { message: err.message })
-  //       if (body.path && body.view && body.title) {
-  //         try {
-  //           fs.outputFile(
-  //             path.join(paths.content, body.path, body.view + '.txt'),
-  //             utilsContent.encode({ title: body.title }),
-  //             function (err) {
-  //               if (err) return console.error(err.message)
-  //               if (options.verbose) console.log('created ' + page.path)
-  //               ctx.log.info('write')
-  //               ctx.send(201, { message: 'success' })
-  //               // major hack to force refresh
-  //               fs.appendFileSync(
-  //                 path.join(paths.root, '.log'),
-  //                 path.join(body.path, body.view + '.txt\n')
-  //               )
-  //             }
-  //           )
-  //         } catch (err) {
-  //           ctx.send(400, { message: 'can not update' })
-  //         }
-  //       } else {
-  //         ctx.send(400, { message: 'missing data' })
-  //       }
-  //     }) 
-  //   })
-  // })
+            // major hack to force refresh
+            fs.appendFileSync(
+              path.join(paths.root, '.log'),
+              path.join(body.path, body.view + '.txt\n')
+            )
 
-  // app.route('PUT', '/add-file', function (req, res, ctx) {
-  //   cors(req, res, function () {
-  //     parseBody(req, 1e6, function (err, body) {
-  //       if (err) return ctx.send(400, { message: err.message })
-  //       if (body.path && body.filename && body.result) {
-  //         // SUPER HACKY
-  //         var image = new Buffer(body.result.split(",")[1], 'base64')
-  //         try {
-  //           fs.outputFile(
-  //             path.join(paths.content, body.path, body.filename),
-  //             image,
-  //             'binary',
-  //             function (err) {
-  //               if (err) return console.error(err.message)
-  //               if (options.verbose) console.log('created ' + page.path)
-  //               ctx.log.info('write')
-  //               ctx.send(201, { message: 'success' })
-  //               // major hack to force refresh
-  //               fs.appendFileSync(
-  //                 path.join(paths.root, '.log'),
-  //                 path.join(body.path, body.view + '.txt\n')
-  //               )
-  //             }
-  //           )
-  //         } catch (err) {
-  //           ctx.send(400, { message: 'can not update' })
-  //         }
-  //       } else {
-  //         ctx.send(400, { message: 'missing data' })
-  //       }
-  //     }) 
-  //   })
-  // })
+            res.writeHead(201, { 'Content-Type': 'application/json' })
+            return res.end(JSON.stringify({ message: 'success' }))
+          }
+        )
+      } catch (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json' })
+        return res.end(JSON.stringify({ message: 'Error '}))
+      }
+    }) 
+  }
 
+  function handleAddFile (req, res) {
+    parseBody(req, 1e6, function (err, body) {
+      if (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json' })
+        return res.end(JSON.stringify({ message: 'Error '}))
+      }
 
-  // app.route('PUT', '/remove', function (req, res, ctx) {
-  //   cors(req, res, function () {
-  //     parseBody(req, 1e6, function (err, body) {
-  //       if (err) return ctx.send(400, { message: err.message })
-  //       if (body.path) {
-  //         try {
-  //           fs.remove(
-  //             path.join(paths.content, body.path),
-  //             function (err) {
-  //               if (err) return console.error(err.message)
-  //               if (options.verbose) console.log('created ' + page.path)
-  //               ctx.log.info('write')
-  //               ctx.send(201, { message: 'success' })
-  //               // major hack to force refresh
-  //               fs.appendFileSync(
-  //                 path.join(paths.root, '.log'),
-  //                 path.join(body.path, body.view + '.txt\n')
-  //               )
-  //             }
-  //           )
-  //         } catch (err) {
-  //           ctx.send(400, { message: 'can not update' })
-  //         }
-  //       } else {
-  //         ctx.send(400, { message: 'missing data' })
-  //       }
-  //     }) 
-  //   })
-  // })
+      try {
+        var image = new Buffer(body.result.split(",")[1], 'base64')
+        fs.outputFile(
+          path.join(paths.content, body.path, body.filename),
+          image,
+          'binary',
+          function (err) {
+            if (err) return console.error(err.message)
+            if (options.verbose) console.log('created ' + page.path)
 
-  // app.route('default', function (req, res, ctx) {
-  //   cors(req, res, function () {
-  //     ctx.log.info('Route doesnt exist')
-  //     ctx.send(404, { message: 'Route does not exist' })
-  //   })
-  // })
+            // major hack to force refresh
+            fs.appendFileSync(
+              path.join(paths.root, '.log'),
+              path.join(body.path, body.view + '.txt\n')
+            )
 
-  // start
-  // app.listen(options.portapi || 8081)
-  // console.log('Api running on http://localhost:' + options.portapi)
+            res.writeHead(201, { 'Content-Type': 'application/json' })
+            return res.end(JSON.stringify({ message: 'success' }))
+          }
+        )
+      } catch (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json' })
+        return res.end(JSON.stringify({ message: 'Error '}))
+      }
+    }) 
+  }
+
+  function handleRemove (req, res) {
+    parseBody(req, 1e6, function (err, body) {
+      if (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json' })
+        return res.end(JSON.stringify({ message: 'Error '}))
+      }
+
+      try {
+        fs.remove(
+          path.join(paths.content, body.path),
+          function (err) {
+            if (err) return console.error(err.message)
+            if (options.verbose) console.log('created ' + page.path)
+              
+            // major hack to force refresh
+            fs.appendFileSync(
+              path.join(paths.root, '.log'),
+              path.join(body.path, body.view + '.txt\n')
+            )
+
+            res.writeHead(201, { 'Content-Type': 'application/json' })
+            return res.end(JSON.stringify({ message: 'success' }))
+          }
+        )
+      } catch (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json' })
+        return res.end(JSON.stringify({ message: 'Error '}))
+      }
+    }) 
+  }
 }
 
 function cors (req, res, next) {
