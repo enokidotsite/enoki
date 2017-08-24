@@ -7,7 +7,7 @@ var budo = require('budo')
 
 // core
 var enokiTransform = require('../transform')
-var enokiModule = require('../')
+var enoki = require('../')
 
 // utilities
 var utilsContent = require('../lib/utils/content')
@@ -39,6 +39,7 @@ function panel (opts) {
   router.route('PUT', '/api/v1/remove', handleRemove)
   router.route('PUT', '/api/v1/update', handleUpdate)
   router.route('PUT', '/api/v1/add', handleAdd)
+  router.route('GET', '/api/v1/state', handleState)
 
   // interface
   var server = budo(paths.panel, {
@@ -56,6 +57,16 @@ function panel (opts) {
   }).on('connect', function (ev) {
     console.log('Panel running on %s', ev.uri)
   })
+
+  function handleState(req, res) {
+    try {
+      var state = enoki({ directory: paths.root })
+      res.writeHead(201, { 'Content-Type': 'application/json' })
+      return res.end(JSON.stringify(state))
+    } catch (err) {
+      handleError(req, res, err)
+    }
+  }
 
   function handleUpdate (req, res) {
     parseBody(req, 1e6, function (err, body) {
