@@ -14,6 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "budo": "^10.0.4",
+    "busboy": "^0.2.14",
+    "formidable": "^1.1.1",
     "fs-compare": "0.0.4",
     "fs-extra": "^4.0.1",
     "image-size": "^0.6.1",

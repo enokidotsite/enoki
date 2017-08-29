@@ -1,9 +1,12 @@
 var serverRouter = require('server-router')
 var globify = require('require-globify')
 var parseBody = require('parse-body')
+var Busboy = require('busboy')
+var util = require('util')
 var fs = require('fs-extra')
 var path = require('path')
 var budo = require('budo')
+var inspect = require('util').inspect
 
 // core
 var enokiTransform = require('../transform')
@@ -35,7 +38,7 @@ function panel (opts) {
   }
 
   // routes
-  router.route('PUT', '/api/v1/add-file', handleAddFile)
+  router.route('POST', '/api/v1/add-files', handleAddFiles)
   router.route('PUT', '/api/v1/remove', handleRemove)
   router.route('PUT', '/api/v1/update', handleUpdate)
   router.route('PUT', '/api/v1/add', handleAdd)
@@ -70,7 +73,7 @@ function panel (opts) {
 
   function handleUpdate (req, res) {
     parseBody(req, 1e6, function (err, body) {
-      if (err) return handleError(err)
+      if (err) return handleError(req, res, err)
       try {
         writePage.update({
           pathContent: paths.content,
@@ -90,7 +93,7 @@ function panel (opts) {
 
   function handleAdd (req, res) {
     parseBody(req, 1e6, function (err, body) {
-      if (err) return handleError(err)
+      if (err) return handleError(req, res, err)
       try {
         writePage.add({
           pathContent: paths.content,
@@ -109,10 +112,57 @@ function panel (opts) {
     }) 
   }
 
-  // TOOD: clean up and switch to form data
-  function handleAddFile (req, res) {
+  function handleRemove (req, res) {
     parseBody(req, 1e6, function (err, body) {
-      if (err) return handleError(err)
+      if (err) return handleError(req, res, err)
+      try {
+        writePage.remove({
+          pathContent: paths.content,
+          pathPage: body.pathPage
+        }, function (err) {
+          if (err) return handleError(req, res, err)
+          if (options.verbose) console.log('deleted ' + body.pathPage)
+          writeSite.refresh(paths.root, body.pathPage)
+          return handleSuccess(req, res)
+        })
+      } catch (err) {
+        return handleError(req, res, err)
+      }
+    }) 
+  }
+
+  // TOOD: clean up and switch to form data
+  function handleAddFiles (req, res) {
+    if (req.method !== 'POST') return handleError(req, res, { message: 'Can not upload' })
+    try {
+      var busboy = new Busboy({ headers: req.headers })
+
+    busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+      var pathDir = path.join(paths.content, req.headers['path-page'])
+      fs.ensureDir(pathDir, function (dir, err) {
+        if (err) return handleError(req, res, { message: 'Can not upload' })
+        file.pipe(fs.createWriteStream(path.join(pathDir, filename)))
+      })
+    })
+
+    busboy.on('finish', function() {
+      console.log('Done parsing form!');
+      writeSite.refresh(paths.root, req.headers['path-page'])
+      res.writeHead(303, { Connection: 'close', Location: '/' });
+      res.end();
+    });
+
+    req.pipe(busboy)
+    } catch (err) {
+      if (err) return handleError(req, res, err) 
+    }
+
+  }
+
+  // TOOD: clean up and switch to form data
+  function handleAddFileOrig (req, res) {
+    parseBody(req, 1e6, function (err, body) {
+      if (err) return handleError(req, res, err)
 
       try {
         var image = new Buffer(body.result.split(",")[1], 'base64')
@@ -140,29 +190,9 @@ function panel (opts) {
       }
     }) 
   }
-
-  function handleRemove (req, res) {
-    parseBody(req, 1e6, function (err, body) {
-      if (err) return handleError(err)
-      try {
-        writePage.remove({
-          pathContent: paths.content,
-          pathPage: body.pathPage
-        }, function (err) {
-          if (err) return handleError(req, res, err)
-          if (options.verbose) console.log('deleted ' + body.pathPage)
-          writeSite.refresh(paths.root, body.pathPage)
-          return handleSuccess(req, res)
-        })
-      } catch (err) {
-        return handleError(req, res, err)
-      }
-    }) 
-  }
 }
 
 function handleError (req, res, err) {
-  console.warn(err)
   res.writeHead(400, { 'Content-Type': 'application/json' })
   return res.end(JSON.stringify({ message: 'Error:' + err.message }))
 }
