@@ -131,64 +131,32 @@ function panel (opts) {
     }) 
   }
 
-  // TOOD: clean up and switch to form data
   function handleAddFiles (req, res) {
-    if (req.method !== 'POST') return handleError(req, res, { message: 'Can not upload' })
+    if (req.method !== 'POST') {
+      return handleError(req, res, { message: 'Can not upload' })
+    }
+    
     try {
       var busboy = new Busboy({ headers: req.headers })
 
-    busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-      var pathDir = path.join(paths.content, req.headers['path-page'])
-      fs.ensureDir(pathDir, function (dir, err) {
-        if (err) return handleError(req, res, { message: 'Can not upload' })
-        file.pipe(fs.createWriteStream(path.join(pathDir, filename)))
+      busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+        var pathDir = path.join(paths.content, req.headers['path-page'])
+        fs.ensureDir(pathDir, function (dir, err) {
+          if (err) return handleError(req, res, { message: 'Can not upload' })
+          file.pipe(fs.createWriteStream(path.join(pathDir, filename)))
+        })
       })
-    })
 
-    busboy.on('finish', function() {
-      console.log('Done parsing form!');
-      writeSite.refresh(paths.root, req.headers['path-page'])
-      res.writeHead(303, { Connection: 'close', Location: '/' });
-      res.end();
-    });
+      busboy.on('finish', function() {
+        writeSite.refresh(paths.root, req.headers['path-page'])
+        res.writeHead(303, { Connection: 'close', Location: '/' });
+        res.end();
+      });
 
-    req.pipe(busboy)
+      req.pipe(busboy)
     } catch (err) {
       if (err) return handleError(req, res, err) 
     }
-
-  }
-
-  // TOOD: clean up and switch to form data
-  function handleAddFileOrig (req, res) {
-    parseBody(req, 1e6, function (err, body) {
-      if (err) return handleError(req, res, err)
-
-      try {
-        var image = new Buffer(body.result.split(",")[1], 'base64')
-        fs.outputFile(
-          path.join(paths.content, body.pathPage, body.filename),
-          image,
-          'binary',
-          function (err) {
-            if (err) return console.error(err.message)
-            if (options.verbose) console.log('created ' + page.path)
-
-            // major hack to force refresh
-            fs.appendFileSync(
-              path.join(paths.root, '.log'),
-              path.join(body.pathPage, body.view + '.txt\n')
-            )
-
-            res.writeHead(201, { 'Content-Type': 'application/json' })
-            return res.end(JSON.stringify({ message: 'success' }))
-          }
-        )
-      } catch (err) {
-        res.writeHead(400, { 'Content-Type': 'application/json' })
-        return res.end(JSON.stringify({ message: 'Error '}))
-      }
-    }) 
   }
 }
 
