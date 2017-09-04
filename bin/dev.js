@@ -1,18 +1,18 @@
-var fs = require('fs')
-var path = require('path')
+var globify = require('require-globify')
 var browserify = require('browserify')
 var watchify = require('watchify')
 var budo = require('budo')
-var globify = require('require-globify')
+var path = require('path')
+var fs = require('fs')
 
+var utilsOptions = require('../lib/utils/options')
 var enoki = require('../transform')
-var getOptions = require('./options')
 
 module.exports = serve
 
 function serve (opts) {
-  var options = getOptions.defaults(opts)
-  var paths = getOptions.paths(options)
+  var options = utilsOptions.defaults(opts)
+  var paths = utilsOptions.paths(options)
 
   budo(paths.site, {
     live: options.live,

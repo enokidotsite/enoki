@@ -1,15 +1,15 @@
+var fsCompareSync = require('fs-compare').sync
 var assert = require('assert')
 var path = require('path')
 var fs = require('fs-extra')
-var fsCompareSync = require('fs-compare').sync
 
-var getOptions = require('./options')
+var utilsOptions = require('../lib/utils/options')
 
 module.exports = build
 
 function build (opts) {
-  var options = getOptions.defaults(opts)
-  var paths = getOptions.paths(options)
+  var options = utilsOptions.defaults(opts)
+  var paths = utilsOptions.paths(options)
   var site = readSiteSync()
   var view = readViewSync()
 
@@ -102,9 +102,8 @@ function build (opts) {
           }
         )
       })
-    } catch (err) {
-
-    }
+    // fail silently
+    } catch (err) { }
   }
 
   // throw the content in the view
@@ -115,11 +114,14 @@ function build (opts) {
   // try reading the site’s exports
   function readSiteSync () {
     try {
-      return require(paths.site)
+      var exists = fs.lstatSync(path.join(paths.site, 'index.js')).isFile()
     } catch (err) {
-      console.error('directory structure is not a site')
-      console.error(err)
+      throw new Error(`enoki: site does not exist in directory "${options.site}"`)
     }
+
+    var site = require(paths.site)
+    assert.equal(typeof site.toString, 'function', 'enoki: site must export `.toString()` to render routes')
+    return site
   }
 
   // load the view if it’s there, default if not
