@@ -115,11 +115,11 @@ function build (opts) {
   function readSiteSync () {
     try {
       var exists = fs.lstatSync(path.join(paths.site, 'index.js')).isFile()
-      var site = require(paths.site)
     } catch (err) {
       throw new Error(`enoki: site does not exist in directory "${options.site}"`)
     }
 
+    var site = require(paths.site)
     assert.equal(typeof site.toString, 'function', 'enoki: site must export `.toString()` to render routes')
     return site
   }
