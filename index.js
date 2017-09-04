@@ -36,13 +36,13 @@ function enoki (opts) {
   }
 
   // helpers
-  this.onPage = opts.onPage || function () { }
-  this.onFile = opts.onFile || function () { }
+  this.onPage = (opts.onPage === undefined) ? function () { } : opts.onPage
+  this.onFile = (opts.onFile === undefined) ? function () { } : opts.onFile
 
   // kit
-  this.getPage = require('./lib/page')
-  this.getFile = require('./lib/file')
-  this.getSite = require('./lib/site')
+  this.getPage = require('./lib/read/page')
+  this.getFile = require('./lib/read/file')
+  this.getSite = require('./lib/read/site')
 
   // public
   this.site = this.getSite()

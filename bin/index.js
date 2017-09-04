@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 var build = require('./build')
 var dev = require('./dev')
-var defaults = require('./defaults')
+var panel = require('./panel')
+var defaults = require('../lib/utils/defaults')
 
 require('yargs')
   .command(
@@ -19,6 +20,14 @@ require('yargs')
       setOptions(yargs)
     },
     dev
+  )
+  .command(
+    'panel',
+    'run the panel',
+    function (yargs) {
+      setOptions(yargs)
+    },
+    panel
   )
   .usage('$0 <cmd> [args]')
   .alias('v', 'version')
