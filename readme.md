@@ -55,6 +55,14 @@ enoki dev
 
 Spin up a [Budo](https://github.com/mattdesl/budo) development server and watch for changes. If you’d like to customize this configuration during pre-alpha, check out the [Browserify Transform](#browserify-transform).
 
+### Panel
+
+```
+enoki panel
+```
+
+Run the Enoki panel, which provides an ultralight web interface for managing your site’s content. Note that during pre-alpha you must have the panel placed locally next to your site. For an example, take a look at the [Starter Kit](http://starter-kit.com).
+
 ### Browserify Transform
 
 ```
