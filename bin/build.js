@@ -1,4 +1,5 @@
 var fsCompareSync = require('fs-compare').sync
+var objectValues = require('object-values')
 var assert = require('assert')
 var path = require('path')
 var fs = require('fs-extra')
@@ -45,7 +46,7 @@ function build (opts) {
 
     // copy over static assets
     function copyFiles () {
-      Object.values(page.files).forEach(copyFile)
+      objectValues(page.files).forEach(copyFile)
     }
 
     function copyFile (file) {
