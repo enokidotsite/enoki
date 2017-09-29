@@ -12,8 +12,8 @@ function enoki (opts) {
   assert.equal(typeof opts.directory, 'string', 'opts.directory should be type string')
 
   this.path = {
-    content: path.join(opts.directory, opts.pathContent || 'content'),
-    site: path.join(opts.directory, opts.pathSite || 'site')
+    content: fs.realpathSync(path.join(opts.directory, opts.pathContent || 'content')),
+    site: fs.realpathSync(path.join(opts.directory, opts.pathSite || 'site'))
   }
 
   try {
