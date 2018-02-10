@@ -1,33 +1,18 @@
 {
   "name": "enoki",
-  "version": "1.0.5",
-  "description": "",
+  "version": "2.0.0",
+  "description": "A Choo plugin for reading a content directory with Hypha ",
   "main": "index.js",
-  "bin": {
-    "enoki": "./bin/index.js"
-  },
   "scripts": {
     "test": "node ./test"
   },
   "keywords": [],
   "author": "Jon-Kyle <contact@jon-kyle.com> (http://jon-kyle.com)",
-  "license": "ISC",
   "dependencies": {
-    "budo": "^10.0.4",
-    "busboy": "^0.2.14",
-    "formidable": "^1.1.1",
-    "fs-compare": "0.0.4",
-    "fs-extra": "^4.0.1",
-    "image-size": "^0.6.1",
-    "js-yaml": "^3.9.0",
-    "parse-body": "^1.0.3",
-    "require-globify": "^1.4.1",
-    "server-router": "^6.0.0",
-    "slash": "^1.0.0",
-    "static-module": "^1.5.0",
-    "through2": "^2.0.3",
-    "xhr": "^2.4.0",
-    "xtend": "^4.0.1",
-    "yargs": "^8.0.2"
+    "hypha": "^0.3.1",
+    "object-values": "^1.0.0",
+    "parse-dat-url": "^3.0.1",
+    "xhr": "^2.4.1",
+    "xtend": "^4.0.1"
   }
 }
