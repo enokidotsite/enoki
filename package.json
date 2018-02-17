@@ -12,6 +12,7 @@
     "hypha": "^0.3.1",
     "object-values": "^1.0.0",
     "parse-dat-url": "^3.0.1",
+    "smark": "^2.0.0",
     "xhr": "^2.4.1",
     "xtend": "^4.0.1"
   }
