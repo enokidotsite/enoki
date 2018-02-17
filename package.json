@@ -1,6 +1,6 @@
 {
   "name": "enoki",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A Choo plugin for reading a content directory with Hypha ",
   "main": "index.js",
   "scripts": {
