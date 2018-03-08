@@ -172,11 +172,3 @@ Converts the values of an object to an array.
 #### `.value()`
 
 Return the current value.</details>
-
-## Choo
-
-Sick
-
-## Beaker Browser
-
-Nice
