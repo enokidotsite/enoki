@@ -1,1 +1,1 @@
-module.exports = require('./lib/choo-panel')
+module.exports = require('./lib/adapters/choo-panel')
