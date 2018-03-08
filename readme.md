@@ -102,7 +102,7 @@ function view (state, emit) {
 }
 ```
 
-<details><summary><h3>Methods</h3></summary>
+<details><summary><b>Complete Methods List</b></summary>
 
 #### `.children()`
 
