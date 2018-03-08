@@ -1,8 +1,8 @@
-<h1 align="center">Enoki</h1>
+<h1 align="center">🍄 Enoki</h1>
 
 Enoki is a powerfully simple set of tools and interfaces for creating and managing websites and single-page-apps. It’s as vanilla as possible, meant to get out of your way, and play nice with traditional tooling as well as unique environments, such as the peer-to-peer [Beaker Browser](https://beakerbrowser.com).
 
-Although fully-featured, it is still early in Enoki development. Support for other frameworks and syntax styles are on the roadmap. If something you’d like to see is missing, please feel free to contribute!
+Although fully-featured, Enoki is still early in development. Support for other frameworks and syntax styles are on the roadmap. If something you’d like to see is missing, please feel free to contribute!
 
 ## Features
 
@@ -10,6 +10,7 @@ Although fully-featured, it is still early in Enoki development. Support for oth
 - **understandable**: written for clarity
 - **tools**: easy ways of traversing data
 - **cute**: first class support for [choo](https://github.com/choojs/choo), a simple and sturdy front-end framework
+- **panel**: manage your content with a [super simple and extensible interface](https://github.com/enokidotsite/)
 
 ## Usage
 
@@ -63,15 +64,15 @@ function view (state, emit) {
 
 ### Browserify
 
-To use Enoki with browserify just include the transform.
+To use Enoki with browserify just include the transform which will statically inline the JSON `hypha` provides. Ensure you’re using the `.readSync()` method and `-t enoki/transform`.
 
-```
--t enoki/transform
-```
+### Peer-to-Peer / Dat
 
-### Beaker Browser
+The web is becoming re-decentralized! You can use Enoki with [Dat](https://datproject.org) in an environment such as [Beaker Browser](https://beakerbrowser.com) by swapping Node’s `fs` for the `DatArchive` API. This enables real-time reading of the archives’s files. Ensure you’re using `.readAsync()`.
 
-You can use Enoki inside Beaker Browser with the `DatArchive`.
+### Note
+
+Enoki is early in development. If you’d like to see support for webpack, or whatever other tooling, feel free to contribute!
 
 ## Dependencies
 
@@ -155,6 +156,10 @@ Sub-pages of the current page.
 #### `.parent()`
 
 The parent of the current page.
+
+#### `.sort()`
+
+Sorts the current value’s `.pages` by `.order`. Formatting of `.order` follows the arguments of `.sortBy` seperated by a space. For example, `date asc`.
 
 #### `.sortBy(key, order)`
 
