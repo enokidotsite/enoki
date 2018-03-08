@@ -61,6 +61,18 @@ function view (state, emit) {
 }
 ``` 
 
+### Browserify
+
+To use Enoki with browserify just include the transform.
+
+```
+-t enoki/transform
+```
+
+### Beaker Browser
+
+You can use Enoki inside Beaker Browser with the `DatArchive`.
+
 ## Dependencies
 
 For specifics on formatting directories and files, take a look at the dependencies’ documenation.
