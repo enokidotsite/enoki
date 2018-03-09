@@ -171,4 +171,9 @@ Converts the values of an object to an array.
 
 #### `.value()`
 
-Return the current value.</details>
+Return the current value. Not chainable.
+
+#### `.visible()`
+
+Returns if the current value key `visible` is not `false`.
+</details>
