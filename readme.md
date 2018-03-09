@@ -7,14 +7,14 @@ Although fully-featured, Enoki is still early in development. Support for other 
 ## Features
 
 - **no-db**: just files and folders
-- **understandable**: written for clarity
+- **simple**: written for clarity
 - **tools**: easy ways of traversing data
 - **cute**: first class support for [choo](https://github.com/choojs/choo), a simple and sturdy front-end framework
 - **panel**: manage your content with a [super simple and extensible interface](https://github.com/enokidotsite/)
 
 ## Usage
 
-Although the Enoki library can be unsed in a variety of ways, for the sake of example let’s just create a fresh little Choo app and require `enoki/choo`:
+Although the Enoki library can be used in a variety of ways, for the sake of example let’s just create a fresh little Choo app and require `enoki/choo`:
 
 ```js
 var choo = require('choo')
