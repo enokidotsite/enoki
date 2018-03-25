@@ -121,6 +121,10 @@ function view (state, emit) {
 
 Remaps to `.pages()`.
 
+#### `.file(filename)`
+
+Grab an individual file.
+
 #### `.files()`
 
 Files of the current `page`.
@@ -136,6 +140,10 @@ Returns the first `page` or `file`.
 #### `.hasView()`
 
 Does the current page have a custom view?
+
+#### `.images()`
+
+Images of the current page.
 
 #### `.isActive()`
 
