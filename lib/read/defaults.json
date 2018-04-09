@@ -3,7 +3,7 @@
   "file": "index.txt",
   "blueprints": "/blueprints",
   "contentUrl": "",
-  "config": "enoki.json",
+  "config": "site.json",
   "panel": "dat://b34752de83c49c3ad2d90cb71376b1a76bc5010f545d91cc9ddbe1824da3504d/",
   "template": false
 }
