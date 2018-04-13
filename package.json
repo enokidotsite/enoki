@@ -1,6 +1,6 @@
 {
   "name": "enoki",
-  "version": "2.0.7-next.1",
+  "version": "2.0.8-next.1",
   "description": "A Choo plugin for reading a content directory with Hypha ",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "Jon-Kyle <contact@jon-kyle.com> (http://jon-kyle.com)",
   "dependencies": {
-    "hypha": "^0.4.4",
+    "hypha": "^0.4.5",
     "object-key": "^0.2.0",
     "object-values": "^1.0.0",
     "parse-dat-url": "^3.0.1",
