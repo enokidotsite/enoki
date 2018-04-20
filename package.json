@@ -10,6 +10,7 @@
   "author": "Jon-Kyle <contact@jon-kyle.com> (http://jon-kyle.com)",
   "dependencies": {
     "hypha": "^0.4.5",
+    "nanopage": "0.0.1-next.3",
     "object-key": "^0.2.0",
     "object-values": "^1.0.0",
     "parse-dat-url": "^3.0.1",
