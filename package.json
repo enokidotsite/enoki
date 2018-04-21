@@ -3,18 +3,22 @@
   "version": "2.0.8-next.1",
   "description": "A Choo plugin for reading a content directory with Hypha ",
   "main": "index.js",
+  "bin": "bin/index.js",
   "scripts": {
     "test": "node ./test"
   },
   "keywords": [],
   "author": "Jon-Kyle <contact@jon-kyle.com> (http://jon-kyle.com)",
   "dependencies": {
+    "chokidar": "^2.0.3",
     "hypha": "^0.4.5",
+    "mkdirp": "^0.5.1",
     "nanopage": "0.0.1-next.3",
     "object-key": "^0.2.0",
     "object-values": "^1.0.0",
     "parse-dat-url": "^3.0.1",
     "xhr": "^2.4.1",
-    "xtend": "^4.0.1"
+    "xtend": "^4.0.1",
+    "yargs": "^11.0.0"
   }
 }
