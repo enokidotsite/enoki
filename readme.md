@@ -1,4 +1,4 @@
-<h1 align="center">🍄 Enoki</h1>
+<h1 align="center">Enoki</h1>
 
 Enoki is a powerfully simple set of tools and interfaces for creating and managing websites and single-page-apps. It’s as vanilla as possible, meant to get out of your way, and play nice with traditional tooling as well as unique environments, such as the peer-to-peer [Beaker Browser](https://beakerbrowser.com).
 
@@ -63,11 +63,22 @@ function view (state, emit) {
 
 ### Browserify
 
-To use Enoki with browserify just include the transform which will statically inline the JSON `hypha` provides. Ensure you’re using the `.readSync()` method and `-t enoki/transform`.
+To use Enoki with browserify just include the transform which statically inlines the JSON `hypha` creates. Ensure you’re using the `.readSync()` method and `-t enoki/transform`.
 
 ### Peer-to-Peer / Dat
 
 The web is becoming re-decentralized! You can use Enoki with [Dat](https://datproject.org) in an environment such as [Beaker Browser](https://beakerbrowser.com) by swapping Node’s `fs` for the `DatArchive` API. This enables real-time reading of the archives’s files. Ensure you’re using `.readAsync()`.
+
+### CLI
+
+When using Enoki in a Dat environment we use the `DatArchive` API instead of Node’s `fs` to read the archive’s files. However, over `http` Enoki reads a static `json` file for fallback.
+
+If you’d like to output that static `json` when developing your site you can use the Enoki `cli`. It’s possible to watch your content directory for changes by using the `--watch` flag.
+
+```
+enoki content
+enoki content --watch
+```
 
 ### Note
 
