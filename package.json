@@ -14,7 +14,7 @@
     "hypha": "^0.4.5",
     "mkdirp": "^0.5.1",
     "nanopage": "0.0.1-next.3",
-    "object-key": "^0.2.0",
+    "object-keys": "^1.0.11",
     "object-values": "^1.0.0",
     "parse-dat-url": "^3.0.1",
     "xhr": "^2.4.1",
