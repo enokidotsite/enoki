@@ -9,6 +9,8 @@
   },
   "keywords": [],
   "author": "Jon-Kyle <contact@jon-kyle.com> (http://jon-kyle.com)",
+  "repository": "https://github.com/enokidotsite/enoki.git",
+  "license": "Apache-2.0",
   "dependencies": {
     "chokidar": "^2.0.3",
     "hypha": "^0.4.5",
