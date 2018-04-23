@@ -1,9 +1,11 @@
 {
   "name": "enoki",
-  "version": "2.0.8-next.6",
+  "version": "2.0.8-next.7",
   "description": "A Choo plugin for reading a content directory with Hypha",
   "main": "index.js",
-  "bin": "bin/index.js",
+  "bin": {
+    "enoki": "bin/index.js"
+  },
   "scripts": {
     "test": "node ./test"
   },
