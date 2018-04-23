@@ -5,7 +5,7 @@
   "main": "index.js",
   "bin": "bin/index.js",
   "scripts": {
-    "test": "node ./test"
+    "test": "standard --fix && node ./test"
   },
   "keywords": [],
   "author": "Jon-Kyle <contact@jon-kyle.com> (http://jon-kyle.com)",
@@ -22,5 +22,8 @@
     "xhr": "^2.4.1",
     "xtend": "^4.0.1",
     "yargs": "^11.0.0"
+  },
+  "devDependencies": {
+    "standard": "^11.0.1"
   }
 }

@@ -15,13 +15,13 @@ var defaults = {
 }
 
 // create our cli app
-require('yargs')
+module.exports = require('yargs')
   .command('content', 'output static content', setOptions, handleContent)
-  .version('version', require('../package').version )
+  .version('version', require('../package').version)
   .alias('h', 'help')
   .help('help')
   .usage('Usage: $0 -x [num]')
-  .showHelpOnFail(false, "Specify --help for available options")
+  .showHelpOnFail(false, 'Specify --help for available options')
   .argv
 
 // should we watch or not?
@@ -34,7 +34,7 @@ function watchContent (argv) {
   // grab our settings and watch the content dir
   var site = enoki.readSite()
   var watcher = chokidar.watch(site.config.content, {
-    ignored: /(^|[\/\\])\../,
+    ignored: /(^|[/\\])\../,
     persistent: true
   })
 
@@ -86,4 +86,3 @@ function setOptions (yargs) {
       default: defaults.verbose
     })
 }
-
