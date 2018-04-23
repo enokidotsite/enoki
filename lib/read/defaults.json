@@ -1,7 +1,7 @@
 {
-  "blueprints": "blueprints",
-  "config": "site.json",
-  "content": "content",
-  "fallback": "bundles/content.json",
+  "blueprints": "/blueprints",
+  "config": "/site.json",
+  "content": "/content",
+  "fallback": "/bundles/content.json",
   "file": "index.txt"
 }
