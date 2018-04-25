@@ -93,13 +93,13 @@ Enoki exposes a super convenient way for traversing flat content state called [`
 
 You can access it like so:
 
-```
+```js
 var Page = require('enoki/page')
 ```
 
 Alternatively, if you’re using Choo you can access `nanopage` over state:
 
-```
+```js
 state.page().title().value()
 ```
 
