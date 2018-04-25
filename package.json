@@ -26,6 +26,7 @@
     "yargs": "^11.0.0"
   },
   "devDependencies": {
+    "ava": "^0.25.0",
     "standard": "^11.0.1"
   }
 }

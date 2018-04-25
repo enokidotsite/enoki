@@ -1,0 +1,3 @@
+title: Child
+----
+text: Subpage example
