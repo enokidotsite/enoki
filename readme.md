@@ -61,15 +61,11 @@ function view (state, emit) {
 }
 ``` 
 
-### Browserify
-
-To use Enoki with browserify just include the transform which statically inlines the JSON `hypha` creates. Ensure you’re using the `.readSync()` method and `-t enoki/transform`.
-
 ### Peer-to-Peer / Dat
 
 The web is becoming re-decentralized! You can use Enoki with [Dat](https://datproject.org) in an environment such as [Beaker Browser](https://beakerbrowser.com) by swapping Node’s `fs` for the `DatArchive` API. This enables real-time reading of the archives’s files. Ensure you’re using `.readAsync()`.
 
-### CLI
+### HTTP Fallback and CLI
 
 When using Enoki in a Dat environment we use the `DatArchive` API instead of Node’s `fs` to read the archive’s files. However, over `http` Enoki reads a static `json` file for fallback.
 
@@ -86,7 +82,7 @@ Enoki is early in development. If you’d like to see support for webpack, or wh
 
 ## Dependencies
 
-For specifics on formatting directories and files, take a look at the dependencies’ documenation.
+For specifics on formatting directories and files, take a look at the dependencies’ documentation.
 
 - [`smarkt`](https://github.com/jondashkyle/smarkt) for parsing mixed key/value store and yaml plain text files
 - [`hypha`](https://github.com/jondashkyle/hypha) for turning folders and files into json
