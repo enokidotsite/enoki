@@ -1,19 +1,32 @@
 {
   "name": "enoki",
-  "version": "2.0.8",
-  "description": "A Choo plugin for reading a content directory with Hypha ",
+  "version": "2.1.0",
+  "description": "A Choo plugin for reading a content directory with Hypha",
   "main": "index.js",
+  "bin": {
+    "enoki": "./bin/index.js"
+  },
   "scripts": {
-    "test": "node ./test"
+    "test": "standard --fix && node ./test"
   },
   "keywords": [],
   "author": "Jon-Kyle <contact@jon-kyle.com> (http://jon-kyle.com)",
+  "repository": "https://github.com/enokidotsite/enoki.git",
+  "license": "Apache-2.0",
   "dependencies": {
+    "chokidar": "^2.0.3",
     "hypha": "^0.4.5",
-    "object-key": "^0.2.0",
+    "mkdirp": "^0.5.1",
+    "nanopage": "0.0.1-next.3",
+    "object-keys": "^1.0.11",
     "object-values": "^1.0.0",
     "parse-dat-url": "^3.0.1",
     "xhr": "^2.4.1",
-    "xtend": "^4.0.1"
+    "xtend": "^4.0.1",
+    "yargs": "^11.0.0"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "standard": "^11.0.1"
   }
 }

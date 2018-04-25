@@ -1,4 +1,4 @@
-<h1 align="center">🍄 Enoki</h1>
+<h1 align="center">Enoki</h1>
 
 Enoki is a powerfully simple set of tools and interfaces for creating and managing websites and single-page-apps. It’s as vanilla as possible, meant to get out of your way, and play nice with traditional tooling as well as unique environments, such as the peer-to-peer [Beaker Browser](https://beakerbrowser.com).
 
@@ -34,11 +34,10 @@ text: Hey, not bad!
 Inside your Choo views you can traverse your content with a super handy API:
 
 ```js
-var Page = require('enoki/page')
 var html = require('choo/html')
 
 function view (state, emit) {
-  var page = new Page(state)
+  var page = state.page
   var children = page().children().sort('title', 'asc').value()
 
   return html`
@@ -62,13 +61,20 @@ function view (state, emit) {
 }
 ``` 
 
-### Browserify
-
-To use Enoki with browserify just include the transform which will statically inline the JSON `hypha` provides. Ensure you’re using the `.readSync()` method and `-t enoki/transform`.
-
 ### Peer-to-Peer / Dat
 
 The web is becoming re-decentralized! You can use Enoki with [Dat](https://datproject.org) in an environment such as [Beaker Browser](https://beakerbrowser.com) by swapping Node’s `fs` for the `DatArchive` API. This enables real-time reading of the archives’s files. Ensure you’re using `.readAsync()`.
+
+### HTTP Fallback and CLI
+
+When using Enoki in a Dat environment we use the `DatArchive` API instead of Node’s `fs` to read the archive’s files. However, over `http` Enoki reads a static `json` file for fallback.
+
+If you’d like to output that static `json` when developing your site you can use the Enoki `cli`. It’s possible to watch your content directory for changes by using the `--watch` flag.
+
+```
+enoki content
+enoki content --watch
+```
 
 ### Note
 
@@ -76,112 +82,25 @@ Enoki is early in development. If you’d like to see support for webpack, or wh
 
 ## Dependencies
 
-For specifics on formatting directories and files, take a look at the dependencies’ documenation.
+For specifics on formatting directories and files, take a look at the dependencies’ documentation.
 
 - [`smarkt`](https://github.com/jondashkyle/smarkt) for parsing mixed key/value store and yaml plain text files
 - [`hypha`](https://github.com/jondashkyle/hypha) for turning folders and files into json
 
 ## Page API
 
-The Page API is a super easy way of traversing your contnet. A few basic rules.
+Enoki exposes a super convenient way for traversing flat content state called [`nanopage`](https://github.com/jondashkyle/nanopage).
 
-- End a query and return it’s value by calling `.value()`
-- Every method is chainable (except `.value()`)
-- Values can be reused in new queries by doing `page(oldQuery)`
+You can access it like so:
 
-### Examples
-
-```js
+```
 var Page = require('enoki/page')
-
-function view (state, emit) {
-  // instantiate the page
-  var page = new Page(state)
-
-  // directly access pages by their href
-  var site = page('/').value()
-  var about = page('/about').value()
-
-  // grab children and files
-  var children = page().children().sort('name', 'asc').value()
-  var files = page().files().value()
-
-  // create new queries from previous
-  var first = page(children).first().value()
-  var last = page(children).last().value()
-
-  // access specific keys
-  var lastTitle = page(last).value('title')
-}
 ```
 
-<details><summary><b>Complete Methods List</b></summary>
+Alternatively, if you’re using Choo you can access `nanopage` over state:
 
-#### `.children()`
+```
+state.page().title().value()
+```
 
-Remaps to `.pages()`.
-
-#### `.file(filename)`
-
-Grab an individual file.
-
-#### `.files()`
-
-Files of the current `page`.
-
-#### `.find(href)`
-
-Locate a `sub-page` of the `current page` based on the `href`.
-
-#### `.first()`
-
-Returns the first `page` or `file`.
-
-#### `.hasView()`
-
-Does the current page have a custom view?
-
-#### `.images()`
-
-Images of the current page.
-
-#### `.isActive()`
-
-Is the current page active?
-
-#### `.last()`
-
-Returns the last `page` or `file`.
-
-#### `.page()`
-
-The current page.
-
-#### `.pages()`
-
-Sub-pages of the current page.
-
-#### `.parent()`
-
-The parent of the current page.
-
-#### `.sort()`
-
-Sorts the current value’s `.pages` by `.order`. Formatting of `.order` follows the arguments of `.sortBy` seperated by a space. For example, `date asc`.
-
-#### `.sortBy(key, order)`
-
-Sort the `files` or `pages` based by a certain key. Order can be either `asc` or `desc`. For example, `.sortBy('name', 'desc')` or  `.sortBy('date', 'asc')`.
-
-#### `.toArray()`
-
-Converts the values of an object to an array.
-
-#### `.value()`
-
-Return the current value. Not chainable.
-
-#### `.visible()`
-
-Returns if the current value key `visible` is not `false`.
-</details>
+For a complete list of methods, take a look [at the docs](https://github.com/jondashkyle/nanopage)!
