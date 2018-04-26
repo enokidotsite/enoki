@@ -1,8 +1,8 @@
-<div align="center"><img src="example/content/title.svg" height="60px" width="auto"></div>
+<div align="center"><a href="https://enoki.site"><img src="example/content/title.svg" height="60px" width="auto"></a></div>
 
 <br />
 
-Enoki is a powerfully simple set of tools and interfaces for creating and managing websites and single-page-apps. It’s as vanilla as possible, meant to get out of your way, and play nice with traditional tooling as well as unique environments, such as the peer-to-peer [Beaker Browser](https://beakerbrowser.com).
+Enoki is a powerfully simple set of tools and interfaces for creating and managing websites, single-page apps, and whatever else you can imagine. It’s as vanilla as possible, meant to get out of your way, and play nicely with traditional tooling as well as unique environments, such as the peer-to-peer [Beaker Browser](https://beakerbrowser.com).
 
 Although fully-featured, Enoki is still early in development. Support for other frameworks and syntax styles are on the roadmap. If something you’d like to see is missing, please feel free to contribute!
 
