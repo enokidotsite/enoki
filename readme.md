@@ -1,4 +1,4 @@
-<div align="center"><a href="https://enoki.site"><img src="example/content/title.svg" height="60px" width="auto"></a></div>
+<div align="center"><a href="https://enoki.site"><img src="example/content/title.svg" height="auto" width="100%"></a></div>
 
 <br />
 
