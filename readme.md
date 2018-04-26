@@ -16,14 +16,7 @@ Although fully-featured, Enoki is still early in development. Support for other 
 
 ## Usage
 
-The Enoki module can be used in a variety of ways. For a quick overview in situ, take a look at an [example design](https://github.com/enokidotsite/design-jacinto). For the sake of this readme, let’s just create a fresh little Choo app and require `enoki/choo`:
-
-```js
-var choo = require('choo')
-var app = choo()
-
-app.use(require('enoki/choo')())
-```
+The Enoki module can be used in a variety of ways. For a quick overview in situ, take a look at an [example design](https://github.com/enokidotsite/design-jacinto). For the sake of this readme, let’s just create a fresh little Choo app.
 
 Create a `/content` directory in the root of your project and make an `index.txt` file. Pages (and sub-pages) are just folders with their own `index.txt` files:
 
@@ -33,9 +26,68 @@ title: Enoki Example
 text: Hey, not bad!
 ```
 
-Inside your Choo views you can traverse your content with a super handy API:
+Inside `index.js` let’s initialize our Choo app and require the `enoki/choo` plugin which loads our content. If in an environment exposing the Dat API we’ll dynamically read your `/content` into state. If over HTTP we’ll fallback to static JSON output of state when last edited/built.
 
-### Configuration options
+```js
+var choo = require('choo')
+var app = choo()
+
+app.use(require('enoki/choo')())
+```
+
+<details><summary><b>Expaned Choo example</b></summary>
+
+```js
+var html = require('choo/html')
+
+function view (state, emit) {
+  var page = state.page
+  var children = page().children().sort('title', 'asc').value()
+
+  return html`
+    <body>
+      <h1>${page.value('title')}</h1>
+      <article>${page.value('text')}</article>
+      <ul>
+        ${children.map(renderChild)}
+      </ul>
+    </body>
+  `
+
+  function renderChild (props) {
+    var child = page(props)
+    return html`
+      <li>
+        <a href="${child.value('url')}">${child.value('title')}</a>
+      </li>
+    `
+  }
+}
+``` 
+
+</details>
+
+## Page API
+
+Enoki provides a super convenient way for traversing flat content state called [`nanopage`](https://github.com/jondashkyle/nanopage). Just pass some [content state](#content-state) to the constructor and you’re set.
+
+```js
+var Page = require('enoki/page')
+var page = new Page(state)
+
+// some examples
+var title = page().value('title')
+var children = page().children().toArray()
+var imageFirst = page().files().value('path')
+```
+
+For a complete list of methods, take a look [at the docs](https://github.com/jondashkyle/nanopage)!
+
+## Enoki Panel
+
+The [Enoki Panel](https://github.com/enokidotsite/panel) is a super extensible interface for managing an Enoki site’s content. It runs entirely client-side in [Beaker Browser](https://beakerbrowser.com), and is accessible at [panel.enoki.site](https://panel.enoki.site).
+
+## Configuration options
 
 ```json
 {
@@ -85,11 +137,11 @@ The file containing data for each page. Defaults to `index.txt`. An alternate co
 
 </details>
 
-### Peer-to-Peer / Dat
+## Peer-to-Peer / Dat
 
 The web is becoming re-decentralized! You can use Enoki with [Dat](https://datproject.org) in an environment such as [Beaker Browser](https://beakerbrowser.com) by swapping Node’s `fs` for the `DatArchive` API. This enables real-time reading of the archives’s files. Ensure you’re using `.readAsync()`.
 
-### HTTP Fallback and CLI
+## HTTP Fallback and CLI
 
 When using Enoki in a Dat environment we use the `DatArchive` API instead of Node’s `fs` to read the archive’s files. However, over `http` Enoki reads a static `json` file for fallback.
 
@@ -106,54 +158,6 @@ For specifics on formatting directories and files, take a look at the dependenci
 
 - [`smarkt`](https://github.com/jondashkyle/smarkt) for parsing mixed key/value store and yaml plain text files
 - [`hypha`](https://github.com/jondashkyle/hypha) for turning folders and files into json
-
-## Page API
-
-Enoki exposes a super convenient way for traversing flat content state called [`nanopage`](https://github.com/jondashkyle/nanopage). You can access it like so:
-
-```js
-// via require
-var Page = require('enoki/page')
-
-// via `state.page`
-function view (state,emit) {
-  console.log(state.page().title().value())
-}
-```
-
-For a complete list of methods, take a look [at the docs](https://github.com/jondashkyle/nanopage)!
-
-<details><summary><b>Expaned Choo example</b></summary>
-
-```js
-var html = require('choo/html')
-
-function view (state, emit) {
-  var page = state.page
-  var children = page().children().sort('title', 'asc').value()
-
-  return html`
-    <body>
-      <h1>${page.value('title')}</h1>
-      <article>${page.value('text')}</article>
-      <ul>
-        ${children.map(renderChild)}
-      </ul>
-    </body>
-  `
-
-  function renderChild (props) {
-    var child = page(props)
-    return html`
-      <li>
-        <a href="${child.value('url')}">${child.value('title')}</a>
-      </li>
-    `
-  }
-}
-``` 
-
-</details>
 
 ## Contributing
 
