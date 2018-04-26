@@ -1,4 +1,6 @@
-<h1 align="center">Enoki</h1>
+<div align="center"><img src="example/content/title.svg" height="60px" width="auto"></div>
+
+<br />
 
 Enoki is a powerfully simple set of tools and interfaces for creating and managing websites and single-page-apps. It’s as vanilla as possible, meant to get out of your way, and play nice with traditional tooling as well as unique environments, such as the peer-to-peer [Beaker Browser](https://beakerbrowser.com).
 
@@ -7,10 +9,10 @@ Although fully-featured, Enoki is still early in development. Support for other 
 ## Features
 
 - **no-db**: just files and folders
-- **simple**: written for clarity
-- **tools**: easy ways of traversing data
+- **simple**: written for clarity and understandability
+- **tools**: easy ways of [traversing data](#page-api)
 - **cute**: first class support for [choo](https://github.com/choojs/choo), a simple and sturdy front-end framework
-- **panel**: manage your content with a [super simple and extensible interface](https://github.com/enokidotsite/)
+- **panel**: manage your content with a [super simple and extensible interface](https://github.com/enokidotsite/panel)
 
 ## Usage
 
