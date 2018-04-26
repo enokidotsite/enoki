@@ -33,6 +33,88 @@ text: Hey, not bad!
 
 Inside your Choo views you can traverse your content with a super handy API:
 
+### Configuration options
+
+```json
+{
+  "blueprints": "/blueprints",
+  "config": "site.json",
+  "content": "content",
+  "fallback": "/bundles/content.json",
+  "file": "index.txt"
+}
+```
+
+When using the module, pass the configuration object as the first argument to the Enoki class. For example: `new Enoki(defaults)`
+
+If using the Choo plugin, simply pass as the first argument to the returned function. For example: `app.use(require('enoki/choo')(defaults))`
+
+Alternatively, place your configuration in a file called `site.json` within the root directory of your site.
+
+<details><summary><b>Configuration options overview</b></summary>
+
+#### `blueprints`
+
+The directory containing your site’s blueprints. These are JSON files describing the fields for the Enoki Panel. Here’s an [example of that](lib/read/defaults.json).
+
+#### `config`
+
+The location of the configuration file.
+
+#### `content`
+
+The content directory.
+
+#### `fallback`
+
+The location of the content state JSON fallback for HTTP.
+
+#### `file.txt`
+
+The file containing data for each page. Defaults to `index.txt`. An alternate could be `index.md`.
+
+</details>
+
+### Peer-to-Peer / Dat
+
+The web is becoming re-decentralized! You can use Enoki with [Dat](https://datproject.org) in an environment such as [Beaker Browser](https://beakerbrowser.com) by swapping Node’s `fs` for the `DatArchive` API. This enables real-time reading of the archives’s files. Ensure you’re using `.readAsync()`.
+
+### HTTP Fallback and CLI
+
+When using Enoki in a Dat environment we use the `DatArchive` API instead of Node’s `fs` to read the archive’s files. However, over `http` Enoki reads a static `json` file for fallback.
+
+If you’d like to output that static `json` when developing your site you can use the Enoki `cli`. It’s possible to watch your content directory for changes by using the `--watch` flag.
+
+```
+enoki content
+enoki content --watch
+```
+
+## Dependencies
+
+For specifics on formatting directories and files, take a look at the dependencies’ documentation.
+
+- [`smarkt`](https://github.com/jondashkyle/smarkt) for parsing mixed key/value store and yaml plain text files
+- [`hypha`](https://github.com/jondashkyle/hypha) for turning folders and files into json
+
+## Page API
+
+Enoki exposes a super convenient way for traversing flat content state called [`nanopage`](https://github.com/jondashkyle/nanopage). You can access it like so:
+
+```js
+// via require
+var Page = require('enoki/page')
+
+// via `state.page`
+function view (state,emit) {
+  console.log(state.page().title().value())
+}
+```
+
+For a complete list of methods, take a look [at the docs](https://github.com/jondashkyle/nanopage)!
+
+<details><summary><b>Expaned Choo example</b></summary>
+
 ```js
 var html = require('choo/html')
 
@@ -61,46 +143,8 @@ function view (state, emit) {
 }
 ``` 
 
-### Peer-to-Peer / Dat
+</details>
 
-The web is becoming re-decentralized! You can use Enoki with [Dat](https://datproject.org) in an environment such as [Beaker Browser](https://beakerbrowser.com) by swapping Node’s `fs` for the `DatArchive` API. This enables real-time reading of the archives’s files. Ensure you’re using `.readAsync()`.
-
-### HTTP Fallback and CLI
-
-When using Enoki in a Dat environment we use the `DatArchive` API instead of Node’s `fs` to read the archive’s files. However, over `http` Enoki reads a static `json` file for fallback.
-
-If you’d like to output that static `json` when developing your site you can use the Enoki `cli`. It’s possible to watch your content directory for changes by using the `--watch` flag.
-
-```
-enoki content
-enoki content --watch
-```
-
-### Note
+## Contributing
 
 Enoki is early in development. If you’d like to see support for webpack, or whatever other tooling, feel free to contribute!
-
-## Dependencies
-
-For specifics on formatting directories and files, take a look at the dependencies’ documentation.
-
-- [`smarkt`](https://github.com/jondashkyle/smarkt) for parsing mixed key/value store and yaml plain text files
-- [`hypha`](https://github.com/jondashkyle/hypha) for turning folders and files into json
-
-## Page API
-
-Enoki exposes a super convenient way for traversing flat content state called [`nanopage`](https://github.com/jondashkyle/nanopage).
-
-You can access it like so:
-
-```js
-var Page = require('enoki/page')
-```
-
-Alternatively, if you’re using Choo you can access `nanopage` over state:
-
-```js
-state.page().title().value()
-```
-
-For a complete list of methods, take a look [at the docs](https://github.com/jondashkyle/nanopage)!
