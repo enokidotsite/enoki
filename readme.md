@@ -47,11 +47,19 @@ Inside your Choo views you can traverse your content with a super handy API:
 }
 ```
 
-When using the module, pass the configuration object as the first argument to the Enoki class. For example: `new Enoki(defaults)`
+It’s recommended to place your configuration in a file called `site.json` within the root directory of your site. This works like `package.json`, but for your site. Just as `package.json` can be read using any number of tools, your `site.json` can be too.
 
-If using the Choo plugin, simply pass as the first argument to the returned function. For example: `app.use(require('enoki/choo')(defaults))`
+Alternatively, when using the module, pass the configuration object as the first argument to the Enoki class. When using the Choo plugin, simply pass as the first argument to the returned function.
 
-Alternatively, place your configuration in a file called `site.json` within the root directory of your site.
+```js
+// using the module
+new Enoki(defaults)
+
+// using the choo plugin
+app.use(require('enoki/choo')(defaults))
+```
+
+Configuration is progressively constructed, just like `package.json`: module defaults → `site.json` → configuration object argument.
 
 <details><summary><b>Configuration options overview</b></summary>
 
