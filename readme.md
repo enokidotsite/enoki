@@ -16,7 +16,7 @@ Although fully-featured, Enoki is still early in development. Support for other 
 
 ## Usage
 
-Although the Enoki library can be used in a variety of ways, for the sake of example let’s just create a fresh little Choo app and require `enoki/choo`:
+The Enoki module can be used in a variety of ways. For a quick overview in situ, take a look at an [example design](https://github.com/enokidotsite/design-jacinto). For the sake of this readme, let’s just create a fresh little Choo app and require `enoki/choo`:
 
 ```js
 var choo = require('choo')
