@@ -61,6 +61,13 @@ function view (state, emit) {
 }
 ``` 
 
+Don’t want your content to load automatically?
+
+```js
+var options = { autoload: false }
+app.use(require('enoki/choo')(options))
+```
+
 ### Peer-to-Peer / Dat
 
 The web is becoming re-decentralized! You can use Enoki with [Dat](https://datproject.org) in an environment such as [Beaker Browser](https://beakerbrowser.com) by swapping Node’s `fs` for the `DatArchive` API. This enables real-time reading of the archives’s files. Ensure you’re using `.readAsync()`.
