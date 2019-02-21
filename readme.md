@@ -63,7 +63,7 @@ function view (state, emit) {
     `
   }
 }
-``` 
+```
 
 </details>
 
